@@ -11,6 +11,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $end_date = $_POST['end_date'];
     $admin_password = $_POST['admin_password'];
 
+    // Limpiar buffer de salida
+    ob_start();
+
     // Validar contraseña del administrador
     $sql = "SELECT * FROM employees WHERE role = 'Administrador' AND password = ?";
     $stmt = $conn->prepare($sql);
@@ -19,9 +22,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $stmt->store_result();
 
     if ($stmt->num_rows === 0) {
+        ob_end_clean(); // Limpiar buffer si la contraseña es incorrecta
         echo json_encode(['status' => 'error', 'message' => 'Contraseña incorrecta.']);
+        $stmt->close();
+        $conn->close();
         exit;
     }
+
+    $stmt->close(); // Cerrar la consulta de validación
 
     // Obtener registros en el rango de fechas
     $sql = "SELECT e.name, a.date, a.time_in, a.time_out 
@@ -34,7 +42,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $result = $stmt->get_result();
 
     if ($result->num_rows === 0) {
+        ob_end_clean(); // Limpiar buffer si no hay datos
         echo json_encode(['status' => 'error', 'message' => 'No hay datos para el rango de fechas seleccionado.']);
+        $stmt->close();
+        $conn->close();
         exit;
     }
 
@@ -66,10 +77,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // Enviar archivo al navegador
     $writer = new Xlsx($spreadsheet);
+
+    // Limpiar buffer antes de enviar el archivo
+    ob_end_clean();
     $writer->save('php://output');
+
+    $stmt->close();
+    $conn->close();
     exit;
 }
-
-$stmt->close();
-$conn->close();
-
+?>
