@@ -53,17 +53,17 @@ document.addEventListener('DOMContentLoaded', () => {
         const adminPassword = adminPasswordInput.value;
         const dateFrom = dateFromInput.value;
         const dateTo = dateToInput.value;
-
+    
         if (!adminPassword || !dateFrom || !dateTo) {
             showMessage('Por favor completa todos los campos para generar el reporte.', false, reportMessageDiv);
             return;
         }
-
+    
         const formData = new URLSearchParams();
         formData.append('admin_password', adminPassword);
         formData.append('start_date', dateFrom);
         formData.append('end_date', dateTo);
-
+    
         fetch('generate_report.php', {
             method: 'POST',
             headers: {
@@ -73,24 +73,28 @@ document.addEventListener('DOMContentLoaded', () => {
         })
         .then((response) => {
             if (!response.ok) throw new Error('Error en la solicitud');
-            return response.blob();
+            return response.json();
         })
-        .then((blob) => {
-            const url = window.URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = 'reporte_asistencia.xlsx'; // Nombre del archivo descargado
-            document.body.appendChild(a);
-            a.click();
-            a.remove();
-            showMessage('Reporte generado y descargado correctamente.', true, reportMessageDiv);
-            adminPasswordInput.value = ''; // Limpia el campo de contraseña
+        .then((data) => {
+            if (data.status === 'success') {
+                showMessage('Reporte generado y descargado correctamente.', true, reportMessageDiv);
+                const a = document.createElement('a');
+                a.href = data.file; // URL del archivo
+                a.download = 'reporte_asistencia.xlsx'; // Nombre del archivo descargado
+                document.body.appendChild(a);
+                a.click();
+                a.remove();
+                adminPasswordInput.value = ''; // Limpia el campo de contraseña
+            } else {
+                showMessage(data.message, false, reportMessageDiv); // Mensaje de error del backend
+            }
         })
         .catch((error) => {
             console.error('Error:', error);
             showMessage('Error de conexión al generar el reporte', false, reportMessageDiv);
         });
     };
+    
 
     btnEntrada.addEventListener('click', () => registrarAsistencia('entrada'));
     btnSalida.addEventListener('click', () => registrarAsistencia('salida'));

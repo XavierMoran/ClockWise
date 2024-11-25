@@ -40,8 +40,8 @@
 
             <label for="admin_password">Contraseña del Administrador:</label>
             <input type="password" id="admin_password" name="admin_password" required>
-
             <button id="generateReportBtn">Generar Reporte</button>
+            
             <div id="reportMessage" class="message"></div>
         </div>
 
