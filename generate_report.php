@@ -5,6 +5,9 @@ require 'vendor/autoload.php';
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 
+// Establecer la zona horaria de El Salvador
+date_default_timezone_set('America/El_Salvador');
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $start_date = $_POST['start_date'] ?? null;
     $end_date = $_POST['end_date'] ?? null;
@@ -64,6 +67,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     while ($data = $result->fetch_assoc()) {
         $sheet->setCellValue("A{$row}", $data['name']);
         $sheet->setCellValue("B{$row}", $data['date']);
+                
+        // Ajustar la hora de entrada y salida al formato local
+        $time_in = date('H:i:s', strtotime($data['time_in']));
+        $time_out = $data['time_out'] ? date('H:i:s', strtotime($data['time_out'])) : 'N/A';
+
         $sheet->setCellValue("C{$row}", $data['time_in']);
         $sheet->setCellValue("D{$row}", $data['time_out']);
         $row++;

@@ -14,6 +14,9 @@ if ($conn->connect_error) {
     die("Conexión fallida: " . $conn->connect_error);
 }
 
+// Configurar la zona horaria a El Salvador
+date_default_timezone_set('America/El_Salvador');
+
 // Mensaje opcional de conexión exitosa
 // echo "Conexión exitosa a la base de datos";
 ?>

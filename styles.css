@@ -1,44 +1,147 @@
+/* General Reset */
+body, h1, h3, p, label, select, input, button {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Body */
 body {
-    font-family: Arial, sans-serif;
-    background-color: #f0f4f8;
+    font-family: 'Arial', sans-serif;
+    font-size: 16px;
+    background-color: #f4f6f9; /* Fondo claro y profesional */
+    color: #333; /* Texto oscuro para contraste */
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh;
-    margin: 0;
 }
 
+/* Container */
 .container {
-    text-align: center;
     background-color: #ffffff;
+    border: 1px solid #ddd; /* Borde ligero para resaltar */
+    border-radius: 10px; /* Bordes redondeados */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra ligera */
     padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+    max-width: 500px;
+    width: 100%;
+    text-align: center;
 }
 
+/* Titles */
 h1 {
-    color: #333;
+    font-size: 24px;
+    color: #0056b3; /* Azul profesional */
     margin-bottom: 20px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
 }
 
-.attendance-form button {
-    padding: 10px 20px;
-    margin: 10px;
-    font-size: 16px;
+h3 {
+    font-size: 20px;
+    color: #444;
+    margin-bottom: 15px;
+}
+
+/* Labels */
+label {
+    display: block;
+    font-size: 14px;
+    color: #555;
+    margin-bottom: 5px;
+    text-align: left;
+}
+
+/* Inputs */
+input, select {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 14px;
+    color: #333;
+}
+
+/* Input focus */
+input:focus, select:focus {
+    outline: none;
+    border-color: #0056b3; /* Resalta con azul al enfocar */
+    box-shadow: 0 0 5px rgba(0, 86, 179, 0.2);
+}
+
+/* Buttons */
+button {
+    background-color: #0056b3; /* Azul llamativo */
+    color: #fff;
     border: none;
     border-radius: 5px;
-    background-color: #007bff;
-    color: #ffffff;
-    cursor: pointer;
-    transition: background-color 0.3s;
-}
-
-.attendance-form button:hover {
-    background-color: #0056b3;
-}
-
-.message {
-    margin-top: 20px;
+    padding: 10px 15px;
     font-size: 14px;
-    color: #28a745;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+    width: 100%;
+}
+
+button:hover {
+    background-color: #004094; /* Azul más oscuro al pasar el cursor */
+}
+
+button:active {
+    transform: scale(0.98); /* Efecto al hacer clic */
+}
+
+/* Messages */
+.message {
+    font-size: 14px;
+    margin-top: 10px;
+    text-align: center;
+    padding: 5px;
+    border-radius: 5px;
+}
+
+.message.success {
+    color: #155724;
+    background-color: #d4edda;
+    border: 1px solid #c3e6cb;
+}
+
+.message.error {
+    color: #721c24;
+    background-color: #f8d7da;
+    border: 1px solid #f5c6cb;
+}
+
+/* Report Form Section */
+.report-form {
+    margin-top: 30px;
+    border-top: 1px solid #ddd;
+    padding-top: 20px;
+}
+
+.report-form h3 {
+    color: #333;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .container {
+        max-width: 90%;
+    }
+
+    button {
+        font-size: 12px;
+        padding: 8px 10px;
+    }
+
+    h1 {
+        font-size: 20px;
+    }
+
+    h3 {
+        font-size: 18px;
+    }
 }
